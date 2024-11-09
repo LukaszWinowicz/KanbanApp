@@ -1,0 +1,36 @@
+﻿namespace KanbanBlazorApp.Entities
+{
+    public class Location
+    {
+        public int LocationId { get; set; }
+        public string RackName { get; set; } // FK
+        public string Shelf {  get; set; } // wartości od "01" do "07"
+        public string ShelfSpace { get; set; } // wartości od "01" do "13"
+        public BoxSize BoxSize { get; set; } // enum
+        public BoxType BoxType { get; set; } // enum
+        public int ScaleId { get; set; } // FK
+        public string ItemNumber { get; set; } // FK
+
+        // Właściwość generująca LocationName !!! tutaj wartość powinna być unikatowa, nie może dwa razy powtórzyć się taka sama kombinacja
+        public string LocationName
+        {
+            get
+            {
+                return $"{RackName}{Shelf}{ShelfSpace}"; //np: SCTF040501
+            }
+        }
+    }
+
+    public enum BoxSize
+    {
+        Small = 1,  // Oznacza 1 miejsce
+        Medium = 2, // Oznacza 1,5 miejsca
+        Large = 3   // Oznacza 2 miejsca
+    }
+    public enum BoxType
+    {
+        Manual,
+        Bufab,
+        Wurth
+    }
+}
