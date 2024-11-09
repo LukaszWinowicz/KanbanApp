@@ -45,8 +45,49 @@ namespace KanbanApp.API.Database
                       .HasForeignKey(e => e.LocationId) // Klucz obcy w Reading
                       .OnDelete(DeleteBehavior.Cascade); // Usuwanie Location usuwa powiązane Readings
             });
-               
+
             // Konfiguracja encji Location
+            modelBuilder.Entity<Location>(entity =>
+            {
+                entity.HasKey(e => e.LocationId);
+                entity.Property(e => e.RackName)
+                      .IsRequired();
+                entity.Property(e => e.Shelf)
+                      .IsRequired()
+                      .HasMaxLength(2);
+                entity.Property(e => e.ShelfSpace)
+                      .IsRequired()
+                      .HasMaxLength(2);
+                entity.Property(e => e.ItemNumber).IsRequired();
+                entity.HasIndex(e => e.LocationName)
+                      .IsUnique(); // LocationName musi być unikalne
+
+                // Właściwość nawigazyjna do Item (klucz obcy)
+                entity.HasOne(e => e.Item)
+                      .WithMany(i => i.Locations) // Jeden Item do wielu Location
+                      .HasForeignKey(e => e.ItemNumber) // Klucz obcy w Location
+                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Item usuwa powiązane Location
+
+                // Relacja z Rack
+                entity.HasOne(l => l.Rack) // Nawigacja do Rack
+                      .WithMany(r => r.Locations) // Relacja odwrotna
+                      .HasForeignKey(l => l.RackName) // Klucz obcy w Location
+                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Rack usuwa powiązane Location
+
+            });
+
+            // Konfiguracja encji Rack
+            modelBuilder.Entity<Rack>(entity => 
+            { 
+                entity.HasKey(e => e.RackName);
+
+                // Właściwość nawigazyjna do Location(klucz obcy)
+                entity.HasMany(r => r.Locations) // Jeden Rack do wielu Location
+                      .WithOne(l => l.Rack) // Jedno Location do jednego Rack
+                      .HasForeignKey(l => l.RackName) // Klucz obcy w Location
+                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Rack usuwa powiązane Location
+
+            });
 
 
         }
