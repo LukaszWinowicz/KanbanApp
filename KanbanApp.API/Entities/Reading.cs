@@ -2,8 +2,10 @@
 {
     public class Reading
     {
-        public int ReadingId { get; set; }
-        public string LocationName { get; set; }
+        public int ReadingId { get; set; } // Klucz główny
+        public int LocationId { get; set; } // Klucz obcy do Location
+        public Location Location { get; set; } // Nawigacja do Location
+
         public float ReadingWeight { get; set; }
         public DateTime ReadingDate { get; set; }
     }
