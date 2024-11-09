@@ -11,7 +11,7 @@ namespace KanbanBlazorApp.Entities
         public string ShelfSpace { get; set; } // wartości od "01" do "13"
         public BoxSize BoxSize { get; set; } // enum
         public BoxType BoxType { get; set; } // enum
-        public int ScaleId { get; set; } // FK
+        public int ScaleId { get; set; } // Klucz obcy do Scale
         public string ItemNumber { get; set; } // Klucz obcy do Item
 
         // Właściwość generująca LocationName !!! tutaj wartość powinna być unikatowa, nie może dwa razy powtórzyć się taka sama kombinacja
@@ -25,6 +25,7 @@ namespace KanbanBlazorApp.Entities
 
         // Właściwości nawigacyjne
         public Rack Rack { get; set; }
+        public Scale Scale { get; set; }
         public Item Item { get; set; }
         public ICollection<Reading> Readings { get; set; }
 

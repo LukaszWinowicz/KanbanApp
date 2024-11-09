@@ -32,7 +32,7 @@ namespace KanbanApp.API.Database
             modelBuilder.Entity<Reading>(entity =>
             {
                 entity.HasKey(e => e.ReadingId);
-                entity.Property(e => e.Location).IsRequired();
+                entity.Property(e => e.LocationId).IsRequired();
                 entity.Property(e => e.ReadingWeight)
                       .IsRequired()
                       .HasPrecision(10, 2); // Precyzja dla wagi;
@@ -66,13 +66,19 @@ namespace KanbanApp.API.Database
                 entity.HasOne(e => e.Item)
                       .WithMany(i => i.Locations) // Jeden Item do wielu Location
                       .HasForeignKey(e => e.ItemNumber) // Klucz obcy w Location
-                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Item usuwa powiązane Location
+                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Item usuwa powiązane Location [??]
 
                 // Relacja z Rack
                 entity.HasOne(l => l.Rack) // Nawigacja do Rack
                       .WithMany(r => r.Locations) // Relacja odwrotna
                       .HasForeignKey(l => l.RackName) // Klucz obcy w Location
-                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Rack usuwa powiązane Location
+                      .OnDelete(DeleteBehavior.Restrict); // Usunięcie Rack nie usuwa Location
+
+                // Relacja jeden-do-jeden z Scale
+                entity.HasOne(l => l.Scale) // Lokalizacja ma jedną Skalę
+                      .WithOne(s => s.Location) // Skala ma jedną Lokalizację
+                      .HasForeignKey<Location>(l => l.ScaleId) // Klucz obcy w Location
+                      .OnDelete(DeleteBehavior.Restrict); // Usunięcie Scale nie usuwa Location
 
             });
 
@@ -85,10 +91,28 @@ namespace KanbanApp.API.Database
                 entity.HasMany(r => r.Locations) // Jeden Rack do wielu Location
                       .WithOne(l => l.Rack) // Jedno Location do jednego Rack
                       .HasForeignKey(l => l.RackName) // Klucz obcy w Location
-                      .OnDelete(DeleteBehavior.Cascade); // Usunięcie Rack usuwa powiązane Location
+                      .OnDelete(DeleteBehavior.Restrict); //Usunięcie Rack nie usuwa Location
 
             });
 
+            // Konfiguracja encji Scale
+            modelBuilder.Entity<Scale>(entity =>
+            {
+                entity.HasKey(e => e.ScaleId);
+                entity.Property(e => e.CalibrationFactor)
+                      .IsRequired()
+                      .HasPrecision(10, 2); // Precyzja dla CalibrationFactor
+
+                entity.Property(e => e.InitialWeight)
+                      .IsRequired()
+                      .HasPrecision(10, 2); // Precyzja dla InitialWeight
+
+                // Relacja jeden-do-jeden z Location
+                entity.HasOne(s => s.Location) // Skala ma jedną Lokalizację
+                      .WithOne(l => l.Scale) // Lokalizacja ma jedną Skalę
+                      .HasForeignKey<Location>(l => l.ScaleId) // Klucz obcy w Location
+                      .OnDelete(DeleteBehavior.Restrict); // Usunięcie Scale nie usuwa Location
+            });
 
         }
 
