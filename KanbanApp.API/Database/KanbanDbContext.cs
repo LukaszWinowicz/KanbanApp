@@ -14,6 +14,14 @@ namespace KanbanApp.API.Database
         public DbSet<Rack> Racks { get; set; }
         public DbSet<Location> Locations { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("server=localhost;database=KanbanAppDb;trusted_connection=true;TrustServerCertificate=True");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -58,7 +66,7 @@ namespace KanbanApp.API.Database
                 entity.Property(e => e.ShelfSpace)
                       .IsRequired()
                       .HasMaxLength(2);
-                entity.Property(e => e.ItemNumber).IsRequired();
+                entity.HasIndex(e => e.LocationName).IsUnique();
                 entity.HasIndex(e => e.LocationName)
                       .IsUnique(); // LocationName musi być unikalne
 

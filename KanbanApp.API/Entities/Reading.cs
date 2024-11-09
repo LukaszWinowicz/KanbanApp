@@ -6,7 +6,7 @@
         public int LocationId { get; set; } // Klucz obcy do Location
         public Location Location { get; set; } // Nawigacja do Location
 
-        public float ReadingWeight { get; set; }
+        public decimal ReadingWeight { get; set; }
         public DateTime ReadingDate { get; set; }
     }
 }

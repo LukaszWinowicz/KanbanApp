@@ -13,15 +13,7 @@ namespace KanbanBlazorApp.Entities
         public BoxType BoxType { get; set; } // enum
         public int ScaleId { get; set; } // Klucz obcy do Scale
         public string ItemNumber { get; set; } // Klucz obcy do Item
-
-        // Właściwość generująca LocationName !!! tutaj wartość powinna być unikatowa, nie może dwa razy powtórzyć się taka sama kombinacja
-        public string LocationName
-        {
-            get
-            {
-                return $"{RackName}{Shelf}{ShelfSpace}"; //np: SCTF040501
-            }
-        }
+        public string LocationName { get; set; } // Kolumna w bazie danych
 
         // Właściwości nawigacyjne
         public Rack Rack { get; set; }
