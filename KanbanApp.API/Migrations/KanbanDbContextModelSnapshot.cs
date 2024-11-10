@@ -29,7 +29,7 @@ namespace KanbanApp.API.Migrations
 
                     b.HasKey("RackName");
 
-                    b.ToTable("Racks");
+                    b.ToTable("Racks", (string)null);
                 });
 
             modelBuilder.Entity("KanbanBlazorApp.Entities.Item", b =>
@@ -47,7 +47,7 @@ namespace KanbanApp.API.Migrations
 
                     b.HasKey("ItemNumber");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("KanbanBlazorApp.Entities.Location", b =>
@@ -101,7 +101,7 @@ namespace KanbanApp.API.Migrations
                     b.HasIndex("ScaleId")
                         .IsUnique();
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("KanbanBlazorApp.Entities.Reading", b =>
@@ -126,7 +126,7 @@ namespace KanbanApp.API.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Readings");
+                    b.ToTable("Readings", (string)null);
                 });
 
             modelBuilder.Entity("KanbanBlazorApp.Entities.Scale", b =>
@@ -147,7 +147,7 @@ namespace KanbanApp.API.Migrations
 
                     b.HasKey("ScaleId");
 
-                    b.ToTable("Scales");
+                    b.ToTable("Scales", (string)null);
                 });
 
             modelBuilder.Entity("KanbanBlazorApp.Entities.Location", b =>
