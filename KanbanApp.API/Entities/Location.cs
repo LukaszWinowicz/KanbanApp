@@ -31,7 +31,7 @@ namespace KanbanBlazorApp.Entities
     }
     public enum BoxType
     {
-        Manual,
+        Planned,
         Bufab,
         Wurth
     }
