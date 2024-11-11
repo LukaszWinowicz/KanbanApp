@@ -6,7 +6,6 @@ namespace KanbanBlazorApp.Entities
     {
         public int LocationId { get; set; } // Klucz główny
         public string RackName { get; set; } // Klucz obcy do Rack
-        
         public string Shelf {  get; set; } // wartości od "01" do "07"
         public string ShelfSpace { get; set; } // wartości od "01" do "13"
         public BoxSize BoxSize { get; set; } // enum

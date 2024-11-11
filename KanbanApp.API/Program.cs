@@ -1,4 +1,6 @@
 using KanbanApp.API.Database;
+using KanbanApp.API.Mapper;
+using KanbanApp.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<KanbanDbContext>();
+builder.Services.AddScoped<MapperLocation>();
+builder.Services.AddScoped<LocationService>();
 
 var app = builder.Build();
 
