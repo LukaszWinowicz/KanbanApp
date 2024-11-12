@@ -33,7 +33,10 @@ namespace KanbanApp.API.Database
                 entity.Property(e => e.Description)
                       .IsRequired();
                 entity.Property(e => e.Supplier)
-                      .IsRequired();            
+                      .IsRequired();
+                entity.Property(e => e.Factor10Pcs)
+                      .IsRequired()
+                      .HasPrecision(10, 2);
             });
 
             // Konfiguracja encji Reading
