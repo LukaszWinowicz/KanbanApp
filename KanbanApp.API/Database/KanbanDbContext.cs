@@ -43,18 +43,18 @@ namespace KanbanApp.API.Database
             modelBuilder.Entity<Reading>(entity =>
             {
                 entity.HasKey(e => e.ReadingId);
-                entity.Property(e => e.LocationId).IsRequired();
+                entity.Property(e => e.ScaleId).IsRequired();
                 entity.Property(e => e.ReadingWeight)
                       .IsRequired()
                       .HasPrecision(10, 2); // Precyzja dla wagi;
                 entity.Property(e => e.ReadingDate)
                       .IsRequired();
 
-                // Właściwość nawigazyjna do Location (klucz obcy)
-                entity.HasOne(e => e.Location)
-                      .WithMany(l => l.Readings) // Relacja odwrotna (jeden Location do wielu Reading)
-                      .HasForeignKey(e => e.LocationId) // Klucz obcy w Reading
-                      .OnDelete(DeleteBehavior.Cascade); // Usuwanie Location usuwa powiązane Readings
+                // Właściwość nawigazyjna do Scale (klucz obcy)
+                entity.HasOne(e => e.Scale)
+                      .WithMany(l => l.Readings) // Relacja odwrotna (jeden Scale do wielu Reading)
+                      .HasForeignKey(e => e.ScaleId) // Klucz obcy w Reading
+                      .OnDelete(DeleteBehavior.Restrict); // Usuwanie Scale nie usuwa powiązane Readings
             });
 
             // Konfiguracja encji Location
@@ -69,7 +69,6 @@ namespace KanbanApp.API.Database
                 entity.Property(e => e.ShelfSpace)
                       .IsRequired()
                       .HasMaxLength(2);
-                entity.HasIndex(e => e.LocationName).IsUnique();
                 entity.HasIndex(e => e.LocationName)
                       .IsUnique(); // LocationName musi być unikalne
 
@@ -123,6 +122,7 @@ namespace KanbanApp.API.Database
                       .WithOne(l => l.Scale) // Lokalizacja ma jedną Skalę
                       .HasForeignKey<Location>(l => l.ScaleId) // Klucz obcy w Location
                       .OnDelete(DeleteBehavior.Restrict); // Usunięcie Scale nie usuwa Location
+
             });
 
         }

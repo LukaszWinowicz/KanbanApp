@@ -1,4 +1,5 @@
 ﻿using KanbanApp.API.Entities;
+using KanbanApp.API.Enums;
 
 namespace KanbanBlazorApp.Entities
 {
@@ -18,20 +19,6 @@ namespace KanbanBlazorApp.Entities
         public Rack Rack { get; set; }
         public Scale Scale { get; set; }
         public Item Item { get; set; }
-        public ICollection<Reading> Readings { get; set; }
 
-    }
-
-    public enum BoxSize
-    {
-        Small = 1,  // Oznacza 1 miejsce
-        Medium = 2, // Oznacza 1,5 miejsca
-        Large = 3   // Oznacza 2 miejsca
-    }
-    public enum BoxType
-    {
-        Planned,
-        Bufab,
-        Wurth
     }
 }

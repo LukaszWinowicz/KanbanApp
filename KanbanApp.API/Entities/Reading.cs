@@ -3,8 +3,8 @@
     public class Reading
     {
         public int ReadingId { get; set; } // Klucz główny
-        public int LocationId { get; set; } // Klucz obcy do Location
-        public Location Location { get; set; } // Nawigacja do Location
+        public int ScaleId { get; set; } // Klucz obcy do Scales
+        public Scale Scale { get; set; } // Nawigacja do Scale
 
         public decimal ReadingWeight { get; set; }
         public DateTime ReadingDate { get; set; }
