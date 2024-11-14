@@ -38,12 +38,14 @@ namespace KanbanApp.API.Controllers
                 .Select(l => new
                 {
                     RackShelf = $"{l.RackName}{l.Shelf}",       // Rack + Shelf
-                    LocationName = l.LocationName,
+                    ShelfSpace = l.ShelfSpace,
                     Item = l.ItemNumber,
-
-                    //Qty = l.Scale.Readings
-                    //        .Where(r => r.ScaleId == l.ScaleId)  // Readings.ScaleId = Location.ScaleId
-                    //        .Sum(r => r.ReadingWeight / l.Item.Factor10Pcs)
+                    Qty = l.Scale != null
+                            ? l.Scale.Readings
+                            .Where(r => r.ScaleId == l.ScaleId)  // Readings.ScaleId = Location.ScaleId
+                            .OrderByDescending(r => r.ReadingDate)
+                            .Select(r => Math.Round((r.ReadingWeight * 10 ) / (l.Item != null && l.Item.Factor10Pcs > 0 ? l.Item.Factor10Pcs : 1), 2))
+                            .FirstOrDefault() : (decimal?)null
                 })
                 .ToListAsync();
 
