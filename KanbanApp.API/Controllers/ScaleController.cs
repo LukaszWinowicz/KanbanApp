@@ -1,6 +1,5 @@
 ﻿using KanbanApp.API.Database;
 using KanbanBlazorApp.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KanbanApp.API.Controllers
