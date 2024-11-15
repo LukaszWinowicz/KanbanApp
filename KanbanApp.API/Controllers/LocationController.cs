@@ -1,4 +1,5 @@
 ﻿using KanbanApp.API.Database;
+using KanbanApp.API.DTOs;
 using KanbanApp.API.Services;
 using KanbanBlazorApp.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +56,11 @@ namespace KanbanApp.API.Controllers
         [HttpGet("all-rack")]
         public async Task<IActionResult> GetAllRacks() 
         {
-            var results = await _context.Racks.ToListAsync(); 
+            var results = await _context.Racks.Select(r => new RackDto 
+            { 
+                RackName = r.RackName
+            }).ToListAsync(); 
+
             return Ok(results);
 
         }
