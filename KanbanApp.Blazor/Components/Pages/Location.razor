@@ -1,0 +1,41 @@
+﻿@page "/location"
+@using KanbanApp.Blazor.DTOs
+@using KanbanApp.Blazor.Services
+@inject LocationApiService ApiService
+
+<h3>Locations</h3>
+
+@if (racks == null)
+{
+    <p>Loading...</p>
+}
+else if (!racks.Any())
+{
+    <p>No racks available.</p>
+}
+else
+{
+    <ul>
+        @foreach (var rack in racks)
+        {
+            <li>@rack.RackName</li>
+        }
+    </ul>
+}
+
+@code {
+    private IEnumerable<RackDto>? racks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            racks = await ApiService.GetAllRacksAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading racks: {ex.Message}");
+            racks = Enumerable.Empty<RackDto>();
+        }
+    }
+}

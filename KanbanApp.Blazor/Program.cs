@@ -1,4 +1,5 @@
 using KanbanApp.Blazor.Components;
+using KanbanApp.Blazor.Services;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<LocationApiService>();
 
 var app = builder.Build();
 
