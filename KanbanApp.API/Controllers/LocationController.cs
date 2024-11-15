@@ -52,6 +52,13 @@ namespace KanbanApp.API.Controllers
             return Ok(results);
         }
 
+        [HttpGet("all-rack")]
+        public async Task<IActionResult> GetAllRacks() 
+        {
+            var results = await _context.Racks.ToListAsync(); 
+            return Ok(results);
+
+        }
 
     }
 }
